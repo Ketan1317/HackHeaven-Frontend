@@ -123,12 +123,12 @@ const Custom1v1 = () => {
           <div className="w-[1px] h-6 bg-gray-500" />
           <button
             onClick={handleExit}
-            className={`text-xl transition-all duration-300 ${
+            className={`text-lg transition-all duration-300 ${
               showExitConfirm ? "text-red-500 hover:text-red-700" : "text-white hover:text-gray-300"
             }`}
           >
             <IoExitOutline />
-            {showExitConfirm && <span className="ml-2 text-sm">Confirm?</span>}
+            {showExitConfirm && <span className="ml-1 text-sm">Confirm?</span>}
           </button>
         </div>
         <div className="opponent flex items-center gap-4 transition-all duration-300 hover:scale-105">
