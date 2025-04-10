@@ -75,7 +75,7 @@ const Waiting = () => {
             </h1>
             <div className="flex items-center gap-2 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 px-4 py-2 rounded-xl text-xl font-bold shadow-inner shadow-black/30 transition-transform duration-300">
               <span className="text-yellow-300">{user.coins}</span>
-              <span className="animate-spin">🪙</span>
+              <span >🪙</span>
             </div>
           </div>
         </div>
@@ -146,9 +146,11 @@ const Waiting = () => {
             <h2 className="text-xl font-bold text-gray-300 mb-2">
               Game Starts In:
             </h2>
+            <div className="flex items-center justify-center h-screen">
             <div className="text-6xl font-extrabold text-white animate-pulse">
               {countdown}
             </div>
+          </div>
           </div>
         )}
 
