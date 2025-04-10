@@ -47,7 +47,7 @@ const Waiting = () => {
         setCountdown((prev) => prev - 1);
       }, 1000);
     } else if (opponent && countdown === 0) {
-      navigate(`/room/${roomId}`, { state: { stakeAmount, difficulty } });
+      navigate(`/custom`, { state: { stakeAmount, difficulty } });
     }
     return () => clearInterval(timer);
   }, [countdown, navigate, opponent, roomId, stakeAmount, difficulty]);
