@@ -72,29 +72,29 @@ function Home() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+    <div className="flex items-center justify-center min-h-screen bg-gray-900">
+      <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 rounded-lg shadow-lg border border-blue-700">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900">Common Coding Room</h1>
-          <p className="mt-2 text-gray-600">Collaborate and code together in real-time</p>
+          <h1 className="text-4xl font-bold text-blue-300">Common Coding Room</h1>
+          <p className="mt-2 text-gray-400">Collaborate and code together in real-time</p>
         </div>
 
         {error && (
-          <div className="p-4 text-red-700 bg-red-100 rounded-md">
+          <div className="p-4 text-red-300 bg-red-900 rounded-md border border-red-700">
             {error}
           </div>
         )}
 
         <form className="mt-8 space-y-6">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="username" className="block text-sm font-medium text-blue-300">
               Username
             </label>
             <input
               id="username"
               type="text"
               required
-              className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               disabled={isLoading}
@@ -102,13 +102,13 @@ function Home() {
           </div>
 
           <div>
-            <label htmlFor="roomCode" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="roomCode" className="block text-sm font-medium text-blue-300">
               Room Code (for joining)
             </label>
             <input
               id="roomCode"
               type="text"
-              className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               value={roomCode}
               onChange={(e) => setRoomCode(e.target.value)}
               disabled={isLoading}
@@ -120,7 +120,7 @@ function Home() {
               type="submit"
               onClick={handleCreateRoom}
               disabled={isLoading}
-              className="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              className="w-full px-4 py-2 text-white bg-blue-700 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
             >
               {isLoading ? 'Creating Room...' : 'Create New Room'}
             </button>
@@ -128,7 +128,7 @@ function Home() {
               type="submit"
               onClick={handleJoinRoom}
               disabled={isLoading}
-              className="w-full px-4 py-2 text-indigo-600 bg-white border border-indigo-600 rounded-md hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              className="w-full px-4 py-2 text-blue-300 bg-gray-800 border border-blue-600 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
             >
               {isLoading ? 'Joining Room...' : 'Join Existing Room'}
             </button>
@@ -139,4 +139,4 @@ function Home() {
   );
 }
 
-export default Home; 
+export default Home;
