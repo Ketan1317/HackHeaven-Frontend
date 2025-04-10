@@ -29,7 +29,7 @@ const Profile = () => {
 
         // Test a simple GET request to the server first
         console.log("Testing connection to server...");
-        const testResponse = await fetch("http://localhost:5000/", {
+        const testResponse = await fetch("http://localhost:5001/", {
           method: "GET",
         });
 
@@ -42,7 +42,7 @@ const Profile = () => {
         console.log("Server connection successful, fetching profile...");
 
         // Now fetch the actual profile
-        const response = await fetch("http://localhost:5000/profile", {
+        const response = await fetch("http://localhost:5001/profile", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -98,7 +98,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:5000/update-profile", {
+      const response = await fetch("http://localhost:5001/update-profile", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
