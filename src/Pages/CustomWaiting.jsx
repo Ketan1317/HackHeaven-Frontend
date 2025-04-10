@@ -6,6 +6,7 @@ import { BackgroundBeams } from "../ui/Beams-background";
 import { TbCopy, TbCopyCheck } from "react-icons/tb";
 import { FaLink } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
+import user2 from "../assets/user2.jpg"
 
 const Waiting = () => {
   const { roomId } = useParams();
@@ -34,7 +35,7 @@ const Waiting = () => {
       setOpponent({
         name: "Devyansh",
         coins: 1200,
-        avatar: OpponentAvatar,
+        avatar: user2,
       });
     }, 5000);
     return () => clearTimeout(timer);
