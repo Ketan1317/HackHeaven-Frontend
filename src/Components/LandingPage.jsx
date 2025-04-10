@@ -216,7 +216,7 @@ const LandingPage = () => {
             className="flex justify-center space-x-6 animate-fadeInUp"
             style={{ animationDelay: "0.4s" }}
           >
-            <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-cyan-500/50">
+            <button onClick={() => navigate("/login")} className="px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-lg hover:scale-105 transition-transform duration-300 shadow-xs hover:shadow-cyan-500/50">
               Start Now
             </button>
           </div>
