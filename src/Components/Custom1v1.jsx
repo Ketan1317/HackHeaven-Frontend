@@ -3,6 +3,7 @@ import Avatar from "../assets/dev.jpg";
 import { CiPlay1 } from "react-icons/ci";
 import { IoExitOutline } from "react-icons/io5";
 import { FiFileText } from "react-icons/fi";
+import Editor from "@monaco-editor/react";
 
 const Custom1v1 = () => {
   const [opponent, setOpponent] = useState({
@@ -198,7 +199,18 @@ const Custom1v1 = () => {
         <div className="right w-[48vw] min-h-[calc(100vh-10rem)] flex flex-col gap-4">
           <div className="flex-1 bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 shadow-lg shadow-cyan-500/10 transition-all duration-300 hover:shadow-xl">
             {/* Editor Placeholder */}
-            <p className="text-center text-gray-400">Code Editor (Placeholder)</p>
+            {/* <p className="text-center text-gray-400">Code Editor (Placeholder)</p> */}
+            <Editor
+              height="calc(50vh - 7rem)" // Adjust height as needed
+              defaultLanguage="javascript"
+              defaultValue="// Start coding here..."
+              theme="vs-dark" // Use a dark theme consistent with the UI
+              options={{
+                minimap: { enabled: false },
+                fontSize: 14,
+                wordWrap: 'on',
+              }}
+            />
           </div>
           <div className="flex-1 bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 shadow-lg shadow-cyan-500/10 transition-all duration-300 hover:shadow-xl">
             {/* Output Placeholder */}

@@ -89,7 +89,7 @@ const MainPage = () => {
         <ul className="flex gap-12 -ml-7 text-2xl font-semibold">
           <li className="relative group cursor-pointer">
             <NavLink
-              to="/common"
+              to="/home"
               className={({ isActive }) =>
                 `inline-block transition-all duration-500 ease-in-out
          px-2 py-1 rounded-md

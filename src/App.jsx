@@ -10,6 +10,8 @@ import CustomDashboard from "./Pages/CustomDashBoard";
 import DifficultySelector from './Pages/DifficultySelector.jsx';
 import CustomWaiting from "./Pages/CustomWaiting";
 import Custom1v1 from "./Components/Custom1v1.jsx";
+import Home from "./Components/Home.jsx";
+import Room from "./Components/Room.jsx";
 
 const App = () => {
   return (
@@ -25,6 +27,9 @@ const App = () => {
         <Route path = "/forgotpassword" element={<ForgetPassword/>}/>
         <Route path="/difficulty" element={<DifficultySelector />} />
         <Route path = "/waiting" element={<CustomWaiting/>}/>
+        <Route path = "/home" element={<Home/>}/>
+        <Route path="/room" element={<Room />} />
+        <Route path="/room/:roomId" element={<Room />} />
         </Routes>
     </Router>
   );
