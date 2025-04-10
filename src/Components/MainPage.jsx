@@ -116,7 +116,7 @@ const MainPage = () => {
 
           <li className="relative group cursor-pointer">
             <NavLink
-              to="/custom"
+              to="/customdashBoard"
               className={({ isActive }) =>
                 `inline-block transition-all duration-500 ease-in-out
          px-2 py-1 rounded-md
@@ -199,13 +199,14 @@ const MainPage = () => {
           <h1 className="hero-title animate-fadeInUp bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 drop-shadow-xl hover:scale-105 transition-transform duration-500">
             Welcome to HackHeaven 🚀
           </h1>
-          <div className="flip-words-container mb-8">
-            <FlipWords
-              words={flipWords}
-              duration={3000}
-              className="text-3xl font-bold text-cyan-400"
-            />
-          </div>
+          <FlipWords
+  words={flipWords}
+  duration={2500}
+  className="mt-6 mb-12 text-2xl md:text-3xl font-semibold text-transparent 
+    bg-clip-text bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 
+    tracking-wide [text-shadow:_0_1px_3px_rgba(34,211,238,0.2)] 
+    animate-fade-in relative z-20"
+/>
           <p className="hero-subtitle text-gray-300 animate-fadeInUp delay-200">
             Choose a{" "}
             <span className="text-cyan-400 font-semibold">battle mode</span>,

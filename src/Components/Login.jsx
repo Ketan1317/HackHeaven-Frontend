@@ -101,23 +101,52 @@ const Login = () => {
         <div className="meteor-effect"></div>
         <div className="meteor-effect"></div>
         <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
       </div>
 
+      {/* Background Blobs */}
       <div className="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden">
         <div className="absolute top-20 left-10 w-72 h-72 bg-pink-500 opacity-20 rounded-full blur-3xl animate-blob"></div>
         <div className="absolute top-[40%] left-[60%] w-96 h-96 bg-blue-600 opacity-20 rounded-full blur-2xl animate-blob animation-delay-2000"></div>
         <div className="absolute bottom-10 right-10 w-60 h-60 bg-purple-500 opacity-20 rounded-full blur-2xl animate-blob animation-delay-4000"></div>
       </div>
 
-      <header className="flex justify-between items-center px-6 py-4 shadow-md shadow-cyan-500/10">
+      {/* Header */}
+      <header className="relative flex justify-between items-center px-4 sm:px-6 lg:px-8 flex-shrink-0">
         <Link to="/">
-          <img src={logoNew} alt="HackHeaven Logo" className="w-44 -mt-7 animate-float" />
+          <div className="flex items-center gap-4 p-2 sm:gap-6">
+            <img
+              src={logoNew}
+              alt="HackHeaven Logo"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full shadow-md"
+            />
+            <h1 className="text-3xl -ml-4 font-extrabold ">
+              HackHeaven
+            </h1>
+          </div>
         </Link>
-        <div className="-mt-12">
-          <button 
+        <div>
+          <button
             onClick={handleSignUpClick}
-            className="bg-[#1E90FF] hover:bg-[#187bcd] text-white px-5 py-2 font-semibold rounded-xl transition-all duration-300 hover:scale-105">
-            Sign Up
+            className="relative group bg-gradient-to-r from-[#1E90FF] to-[#4169E1] text-white px-5 py-2 font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20"
+          >
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#1E90FF] to-[#4169E1] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            <span className="relative">Sign Up</span>
           </button>
         </div>
       </header>
@@ -168,7 +197,7 @@ const Login = () => {
               </div>
               {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
               <div className="flex justify-end mt-1">
-                <Link to="/forgot-password" className="text-gray-400 text-sm hover:text-[#00C896] hover:underline cursor-pointer">Forgot password?</Link>
+                <Link to="/forgotpassword" className="text-gray-400 text-sm hover:text-[#00C896] hover:underline cursor-pointer">Forgot password?</Link>
               </div>
             </div>
 

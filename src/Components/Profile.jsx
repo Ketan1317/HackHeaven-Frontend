@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "./../assets/HackHeaven.png";
-import OpponentAvatar from "../assets/dev.jpg"
+import logoNew from "../assets/logoNew.png";
+import OpponentAvatar from "../assets/dev.jpg";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -30,29 +30,35 @@ const Profile = () => {
         // Test a simple GET request to the server first
         console.log("Testing connection to server...");
         const testResponse = await fetch("http://localhost:5000/", {
-          method: "GET"
+          method: "GET",
         });
-        
+
         if (!testResponse.ok) {
-          throw new Error(`Server connection test failed: ${testResponse.status}`);
+          throw new Error(
+            `Server connection test failed: ${testResponse.status}`
+          );
         }
-        
+
         console.log("Server connection successful, fetching profile...");
 
         // Now fetch the actual profile
         const response = await fetch("http://localhost:5000/profile", {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         });
 
         console.log("Profile response status:", response.status);
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
-          throw new Error(`Failed to fetch profile: ${response.status} - ${errorData.message || response.statusText}`);
+          throw new Error(
+            `Failed to fetch profile: ${response.status} - ${
+              errorData.message || response.statusText
+            }`
+          );
         }
 
         const data = await response.json();
@@ -61,12 +67,12 @@ const Profile = () => {
         setUser({
           ...data,
           name: data.username || data.name, // Handle both username and name
-          avatar: data.avatar || OpponentAvatar // Use provided avatar or default
+          avatar: data.avatar || OpponentAvatar, // Use provided avatar or default
         });
       } catch (err) {
         console.error("Error fetching profile:", err);
         setError(err.message || "Failed to load profile");
-        
+
         // Only navigate to login if it's an authentication error
         if (err.message.includes("401") || err.message.includes("403")) {
           navigate("/login");
@@ -92,22 +98,26 @@ const Profile = () => {
         return;
       }
 
-      const response = await fetch('http://localhost:5000/update-profile', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/update-profile", {
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: user.name,
           email: user.email,
-          bio: user.bio
-        })
+          bio: user.bio,
+        }),
       });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(`Failed to update profile: ${errorData.message || response.statusText}`);
+        throw new Error(
+          `Failed to update profile: ${
+            errorData.message || response.statusText
+          }`
+        );
       }
 
       alert("Changes saved successfully!");
@@ -122,7 +132,9 @@ const Profile = () => {
   };
 
   if (loading) {
-    return <div className="text-white text-center mt-10">Loading profile...</div>;
+    return (
+      <div className="text-white text-center mt-10">Loading profile...</div>
+    );
   }
 
   if (error) {
@@ -151,7 +163,11 @@ const Profile = () => {
   }
 
   if (!user) {
-    return <div className="text-white text-center mt-10">No user data available.</div>;
+    return (
+      <div className="text-white text-center mt-10">
+        No user data available.
+      </div>
+    );
   }
 
   return (
@@ -162,30 +178,44 @@ const Profile = () => {
         <div className="absolute bottom-10 right-10 w-60 h-60 bg-purple-500 opacity-20 rounded-full blur-2xl animate-blob animation-delay-4000" />
       </div>
 
-      <header className="flex justify-between items-center px-6 py-4 shadow-md shadow-cyan-500/10">
-        <img 
-          src={logo} 
-          className="w-44 -mt-7 animate-float" 
-          alt="logo" 
-          onClick={handleBackToHome}
-          style={{ cursor: 'pointer' }}
+      <div className="meteor-container">
+        <div className="meteor-effect"></div>
+
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+      </div>
+      {/* Navbar */}
+      <header className="flex justify-between items-center px-6 h-28 shadow-md shadow-cyan-500/10 backdrop-blur-sm relative z-10">
+        <img
+          src={logoNew}
+          alt="HackHeaven"
+          className="w-32 hover:scale-105 transition-transform duration-500"
+          onClick={() => navigate("/main")}
         />
-        <div className="flex items-center gap-5 mr-10 -mt-10 transition-all duration-300 animate-fadeIn">
-          <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-cyan-500/30 shadow-lg hover:shadow-cyan-400/40 transition-all duration-300 hover:scale-105">
+
+        <div className="flex items-center gap-5 mr-10 animate-fadeIn group">
+          <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-cyan-500/30 shadow-lg group-hover:shadow-cyan-400/50 transform transition-transform duration-300 ">
             <img
               src={OpponentAvatar}
               alt="User Avatar"
               className="w-full h-full object-cover rounded-full"
             />
           </div>
-
           <div className="flex flex-col">
-            <h1 className="text-3xl font-bold text-white tracking-wide mb-1 drop-shadow-md">
+            <h1 className="text-2xl font-bold mb-1 drop-shadow-md text-white transition-all duration-300 ">
               {user.name}
             </h1>
-            <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 rounded-xl text-xl font-bold shadow-inner shadow-black/30">
+            <div className="flex items-center gap-2 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 px-4 py-2 rounded-xl text-xl font-bold shadow-inner shadow-black/30 transition-transform duration-300 transform ">
               <span className="text-yellow-300">{user.coins}</span>
-              <span className="text-yellow-300 animate-pulse">🪙</span>
+              <span className="animate-spin ">🪙</span>
             </div>
           </div>
         </div>
@@ -223,7 +253,7 @@ const Profile = () => {
             </label>
             <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl px-5 py-2 text-lg font-bold text-yellow-300 flex items-center gap-1 shadow-md shadow-yellow-500/10 mt-1">
               {user.coins}
-              <span className="animate-pulse">🪙</span>
+              <span className="animate-spin">🪙</span>
             </div>
           </div>
         </div>
@@ -233,7 +263,7 @@ const Profile = () => {
 
       <div className="flex items-start justify-start mt-10 px-14 gap-10">
         <div
-          className="text-4xl font-extrabold text-white px-8 py-5 w-72 
+          className="text-4xl font-extrabold text-white px-4 py-2 text-center w-64
           bg-gradient-to-br from-gray-800 via-gray-700 to-gray-600 
           rounded-3xl shadow-xl ring-2 ring-cyan-400/20 
           transition-all duration-500 ease-in-out transform 
@@ -243,7 +273,6 @@ const Profile = () => {
         >
           Account
         </div>
-        
 
         <div className="flex flex-col gap-6 w-full text-white text-lg">
           <div>

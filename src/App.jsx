@@ -6,6 +6,7 @@ import MainPage from './Components/MainPage';
 import LandingPage from './Components/LandingPage';
 import ForgetPassword from './Components/ForgotPassword';
 import Profile from './Components/Profile';
+import CustomDashboard from "./Pages/CustomDashBoard"
 
 const App = () => {
   return (
@@ -15,9 +16,10 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/main" element={<MainPage />} />
-        <Route path="/forget-pass" element={<ForgetPassword />} />
         <Route path ="/profile" element={<Profile/>}/>
-      </Routes>
+        <Route path ="/customdashBoard" element={<CustomDashboard/>}/>
+        <Route path = "/forgotpassword" element={<ForgetPassword/>}/>
+        </Routes>
     </Router>
   );
 };
