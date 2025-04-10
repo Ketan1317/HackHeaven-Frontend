@@ -15,7 +15,7 @@ const Custom = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-[#0B1226] text-white font-family-[] w-full min-h-screen font-sans overflow-x-hidden relative">
+    <div className="bg-[#0B1226] text-white w-full min-h-screen font-sans overflow-x-hidden relative">
       <div className="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden">
         <div className="absolute top-20 left-10 w-72 h-72 bg-pink-500 opacity-20 rounded-full blur-3xl animate-blob" />
         <div className="absolute top-[40%] left-[60%] w-96 h-96 bg-blue-600 opacity-20 rounded-full blur-2xl animate-blob animation-delay-2000" />
@@ -78,7 +78,7 @@ const Custom = () => {
             <div className="flex-grow h-px bg-white/20"></div>
           </div>
           <button
-            onClick={() => navigate('/customcreate')}
+            onClick={() => navigate('/difficulty')}
             className="w-full text-xl font-semibold rounded-2xl px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white transition-transform duration-300 hover:scale-95"
           >
             Create New Room

@@ -6,7 +6,9 @@ import MainPage from './Components/MainPage';
 import LandingPage from './Components/LandingPage';
 import ForgetPassword from './Components/ForgotPassword';
 import Profile from './Components/Profile';
-import CustomDashboard from "./Pages/CustomDashBoard"
+import CustomDashboard from "./Pages/CustomDashBoard";
+import DifficultySelector from './Pages/DifficultySelector.jsx';
+import CustomWaiting from "./Pages/CustomWaiting";
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
         <Route path ="/profile" element={<Profile/>}/>
         <Route path ="/customdashBoard" element={<CustomDashboard/>}/>
         <Route path = "/forgotpassword" element={<ForgetPassword/>}/>
+        <Route path="/difficulty" element={<DifficultySelector />} />
+        <Route path = "/waiting" element={<CustomWaiting/>}/>
         </Routes>
     </Router>
   );
