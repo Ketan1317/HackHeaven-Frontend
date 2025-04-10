@@ -9,12 +9,14 @@ import Profile from './Components/Profile';
 import CustomDashboard from "./Pages/CustomDashBoard";
 import DifficultySelector from './Pages/DifficultySelector.jsx';
 import CustomWaiting from "./Pages/CustomWaiting";
+import Custom1v1 from "./Components/Custom1v1.jsx";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        {/* <Route path ="/" element = {<Custom1v1/>}/> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/main" element={<MainPage />} />
