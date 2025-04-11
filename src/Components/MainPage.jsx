@@ -3,7 +3,7 @@ import logoNew from "./../assets/logoNew.png";
 import { useNavigate, NavLink } from "react-router-dom";
 import { FlipWords } from "../UI/Flip-words";
 import { SparklesCore } from "../UI/sparkles";
-import { BackgroundBeamsWithCollision } from "../ui/background-beams-with-collisions";
+import { BackgroundBeamsWithCollision } from "../UI/background-beams-with-collisions";
 
 const MainPage = () => {
   const navigate = useNavigate();

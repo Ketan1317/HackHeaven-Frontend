@@ -5,7 +5,7 @@ import OpponentAvatar from "../assets/dev.jpg";
 import logoNew from "../assets/logoNew.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BackgroundBeams } from "../ui/Beams-background";
+import { BackgroundBeams } from "../UI/Beams-background";
 
 const API_URL = "http://localhost:5001";
 

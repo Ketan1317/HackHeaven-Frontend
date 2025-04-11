@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import logo from "../assets/logoNew.png";
 import OpponentAvatar from "../assets/dev.jpg";
-import { BackgroundBeams } from "../ui/Beams-background";
+import { BackgroundBeams } from "../UI/Beams-background";
 import { TbCopy, TbCopyCheck } from "react-icons/tb";
 import { FaLink } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
