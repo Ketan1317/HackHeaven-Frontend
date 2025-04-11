@@ -4,7 +4,7 @@ import logoNew from "../assets/logoNew.png";
 import OpponentAvatar from "../assets/dev.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BackgroundBeams } from "../ui/Beams-background";
+// import { BackgroundBeams } from "../ui/Beams-background";
 
 const DifficultySelector = ({ initialStake, onConfirm }) => {
   const [difficulty, setDifficulty] = useState("easy");
