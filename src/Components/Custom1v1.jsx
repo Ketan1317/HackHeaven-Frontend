@@ -95,14 +95,14 @@ const Custom1v1 = () => {
     }
 
     // Fetch user profile
-    axios.get('http://localhost:5001/profile', {
+    axios.get('https://hackheaven.onrender.com/profile', {
       headers: { Authorization: `Bearer ${token}` }
     }).then(response => {
       setUser({ ...response.data, token });
     }).catch(err => console.error('Profile fetch error:', err));
 
     // Initialize WebSocket
-    socketRef.current = io('http://localhost:5001', {
+    socketRef.current = io('https://hackheaven.onrender.com', {
       auth: { token },
       withCredentials: true,
     });
@@ -213,7 +213,7 @@ const Custom1v1 = () => {
       alert("Invalid stake or insufficient coins!");
       return;
     }
-    axios.post('http://localhost:5001/join-match', { stake }, {
+    axios.post('https://hackheaven.onrender.com/join-match', { stake }, {
       headers: { Authorization: `Bearer ${user.token}` }
     }).then(response => {
       setMatchId(response.data.match_id);

@@ -7,7 +7,7 @@ import logoNew from "../assets/logoNew.png";
 import "react-toastify/dist/ReactToastify.css";
 import { BackgroundBeams } from "../UI/Beams-background";
 
-const API_URL = "http://localhost:5001";
+const API_URL = "https://hackheaven.onrender.com";
 
 function Home() {
   const [username, setUsername] = useState("");

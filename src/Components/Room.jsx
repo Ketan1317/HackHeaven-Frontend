@@ -88,7 +88,7 @@ const Room = () => {
     setUsername(storedUsername);
 
     // Initialize socket connection
-    socketRef.current = io("http://localhost:5001", {
+    socketRef.current = io("https://hackheaven.onrender.com", {
       withCredentials: true,
       reconnection: true,
       reconnectionDelay: 1000,

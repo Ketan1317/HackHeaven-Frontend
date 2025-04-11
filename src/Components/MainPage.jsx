@@ -37,7 +37,7 @@ const MainPage = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/logout", {
+      const response = await fetch("https://hackheaven.onrender.com/logout", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
