@@ -5,8 +5,9 @@ import { IoExitOutline } from "react-icons/io5";
 import { FiFileText } from "react-icons/fi";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
+import { io } from "socket.io-client";
 
-// Define language options and mappings
+// Language options and mappings
 const LANGUAGES = [
   { value: "python", label: "Python" },
   { value: "javascript", label: "JavaScript" },
@@ -29,23 +30,13 @@ const LANGUAGE_MAPPING = {
   rust: "rust",
 };
 
-// Initial code templates
 const CODE_TEMPLATES = {
-  python:
-    '# Welcome to Python\n\ndef greeting(name):\n    return f"Hello, {name}!"\n\n# Main program\nif __name__ == "__main__":\n    print(greeting("World"))\n    # Add your code here',
-  javascript:
-    '// Welcome to JavaScript\n\nfunction greeting(name) {\n    return `Hello, ${name}!`;\n}\n\n// Main program\nconsole.log(greeting("World"));\n// Add your code here',
-  java: '// Welcome to Java\n\npublic class Main {\n    public static String greeting(String name) {\n        return "Hello, " + name + "!";\n    }\n    \n    public static void main(String[] args) {\n        System.out.println(greeting("World"));\n        // Add your code here\n    }\n}',
-  cpp: '// Welcome to C++\n#include <iostream>\n#include <string>\n\nusing namespace std;\n\nstring greeting(const string& name) {\n    return "Hello, " + name + "!";\n}\n\nint main() {\n    cout << greeting("World") << endl;\n    // Add your code here\n    return 0;\n}',
-  csharp:
-    '// Welcome to C#\nusing System;\n\nclass Program {\n    static string Greeting(string name) {\n        return $"Hello, {name}!";\n    }\n    \n    static void Main() {\n        Console.WriteLine(Greeting("World"));\n        // Add your code here\n    }\n}',
-  typescript:
-    '// Welcome to TypeScript\n\nfunction greeting(name: string): string {\n    return `Hello, ${name}!`;\n}\n\n// Main program\nconsole.log(greeting("World"));\n// Add your code here',
-  go: '// Welcome to Go\npackage main\n\nimport (\n    "fmt"\n)\n\nfunc greeting(name string) string {\n    return fmt.Sprintf("Hello, %s!", name)\n}\n\nfunc main() {\n    fmt.Println(greeting("World"))\n    // Add your code here\n}',
-  rust: '// Welcome to Rust\n\nfn greeting(name: &str) -> String {\n    format!("Hello, {}!", name)\n}\n\nfn main() {\n    println!("{}", greeting("World"));\n    // Add your code here\n}',
+  python: '# Welcome to Python\n\ndef reverse_string(s):\n    return s[::-1]\nif __name__ == "__main__":\n    print(reverse_string(""))\n    print(reverse_string("a"))\n    print(reverse_string("hello"))\n    print(reverse_string("racecar"))',
+  // Add templates for other languages similarly
+  javascript: '// Welcome to JavaScript\n\nfunction reverse_string(s) {\n    return s.split("").reverse().join("");\n}\nconsole.log(reverse_string(""));\nconsole.log(reverse_string("a"));\nconsole.log(reverse_string("hello"));\nconsole.log(reverse_string("racecar"));',
+  // ... (add for java, cpp, etc.)
 };
 
-// Language versions for Piston API
 const LANGUAGE_VERSIONS = {
   python: "3.10.0",
   javascript: "18.15.0",
@@ -57,7 +48,6 @@ const LANGUAGE_VERSIONS = {
   rust: "1.65.0",
 };
 
-// Test cases for the "Reverse a String" problem
 const TEST_CASES = [
   { input: "", expected: "" },
   { input: "a", expected: "a" },
@@ -65,7 +55,6 @@ const TEST_CASES = [
   { input: "racecar", expected: "racecar" },
 ];
 
-// Questions for the challenge
 const QUESTIONS = [
   "What is the time complexity of reversing a string?",
   "Can a string be reversed in-place? Why or why not?",
@@ -75,31 +64,13 @@ const QUESTIONS = [
 ];
 
 const Custom1v1 = () => {
-  const [opponent, setOpponent] = useState({
-    name: "Devyansh",
-    coins: 1200,
-    avatar: Avatar,
-  });
-  const [user, setUser] = useState({
-    name: "Ketan Goyal",
-    coins: 900,
-    avatar: Avatar,
-  });
+  const [opponent, setOpponent] = useState(null);
+  const [user, setUser] = useState(null);
   const [data, setData] = useState({
     difficulty: "Easy",
     title: "Reverse a String",
-    description:
-      "Write a function that takes a string as input and returns a new string with the characters in reverse order. This is a common string manipulation problem that helps practice string operations and character manipulation.",
-    examples: {
-      sample_test: "hello",
-      sample_output: "olleh",
-      sample_description: "Reverse 'hello' to 'olleh'.",
-    },
-    test_cases: [
-      { test1: "", output1: "" },
-      { test2: "a", output2: "a" },
-      { test3: "racecar", output3: "racecar" },
-    ],
+    description: "Write a function that takes a string as input and returns a new string with the characters in reverse order.",
+    examples: { sample_test: "hello", sample_output: "olleh", sample_description: "Reverse 'hello' to 'olleh'." },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
@@ -110,20 +81,67 @@ const Custom1v1 = () => {
   const [isExecuting, setIsExecuting] = useState(false);
   const [showTestResults, setShowTestResults] = useState(false);
   const [randomQuestion, setRandomQuestion] = useState("");
+  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
+  const [stake, setStake] = useState(0);
+  const [matchId, setMatchId] = useState(null);
   const editorRef = useRef(null);
+  const socketRef = useRef(null);
 
-  // Handle editor mounting
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      window.location.href = '/login'; // Redirect to login if no token
+      return;
+    }
+
+    // Fetch user profile
+    axios.get('http://localhost:5001/profile', {
+      headers: { Authorization: `Bearer ${token}` }
+    }).then(response => {
+      setUser({ ...response.data, token });
+    }).catch(err => console.error('Profile fetch error:', err));
+
+    // Initialize WebSocket
+    socketRef.current = io('http://localhost:5001', {
+      auth: { token },
+      withCredentials: true,
+    });
+
+    socketRef.current.on('match_started', (data) => {
+      setMatchId(data.match_id);
+      setOpponent(data.opponent);
+      setTimeLeft(data.time_left);
+    });
+
+    socketRef.current.on('timer_update', (data) => {
+      setTimeLeft(data.time_left);
+    });
+
+    socketRef.current.on('score_update', (data) => {
+      // Handle score update (e.g., display to user)
+      console.log('Score updated:', data.score);
+    });
+
+    socketRef.current.on('match_ended', (data) => {
+      setUser(prev => ({ ...prev, coins: data.new_coins }));
+      alert(data.message);
+      setMatchId(null);
+      setOpponent(null);
+      setTimeLeft(0);
+    });
+
+    // Set random question
+    setRandomQuestion(QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)]);
+
+    return () => {
+      if (socketRef.current) socketRef.current.disconnect();
+    };
+  }, []);
+
   const handleEditorDidMount = (editor) => {
     editorRef.current = editor;
   };
 
-  // Set random question on mount
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * QUESTIONS.length);
-    setRandomQuestion(QUESTIONS[randomIndex]);
-  }, []);
-
-  // Update code template when language changes
   useEffect(() => {
     setCode(CODE_TEMPLATES[selectedLanguage]);
   }, [selectedLanguage]);
@@ -151,18 +169,18 @@ const Custom1v1 = () => {
         if (response.data.run.stderr) {
           setError(response.data.run.stderr);
         } else {
-          // Check if the code correctly reverses strings
           let allTestsPassed = true;
           const lines = executionOutput.split("\n").map(line => line.trim());
           TEST_CASES.forEach((test, index) => {
             const expectedOutput = test.expected;
             const actualOutput = lines[index] || "";
-            if (actualOutput !== expectedOutput) {
-              allTestsPassed = false;
-            }
+            if (actualOutput !== expectedOutput) allTestsPassed = false;
           });
           if (allTestsPassed && lines.length === TEST_CASES.length) {
             setShowTestResults(true);
+            if (socketRef.current && matchId) {
+              socketRef.current.emit('submit_code', { match_id: matchId, code });
+            }
           }
         }
       }
@@ -190,6 +208,18 @@ const Custom1v1 = () => {
     }
   };
 
+  const joinMatch = () => {
+    if (!user || stake <= 0 || stake > user.coins) {
+      alert("Invalid stake or insufficient coins!");
+      return;
+    }
+    axios.post('http://localhost:5001/join-match', { stake }, {
+      headers: { Authorization: `Bearer ${user.token}` }
+    }).then(response => {
+      setMatchId(response.data.match_id);
+    }).catch(err => console.error('Join match error:', err));
+  };
+
   return (
     <div className="bg-[#0B1226] text-white min-h-screen overflow-x-hidden relative font-sans">
       {/* Background Blobs */}
@@ -202,106 +232,44 @@ const Custom1v1 = () => {
       {/* Header */}
       <header className="flex justify-between items-center px-6 h-20 shadow-md shadow-cyan-500/10 backdrop-blur-sm relative z-10">
         <div className="user flex items-center gap-4 transition-all duration-300 hover:scale-105">
-          <img
-            src={user.avatar}
-            alt={user.name}
-            className="w-12 h-12 rounded-full border-2 border-cyan-500/30 shadow-md"
-          />
+          <img src={user?.avatar} alt={user?.name} className="w-12 h-12 rounded-full border-2 border-cyan-500/30 shadow-md" />
           <div className="flex flex-col">
             <div className="flex items-center gap-2 text-lg font-semibold">
-              <p>{user.name}</p>
-              <p className="text-yellow-400">{user.coins} 🪙</p>
+              <p>{user?.name}</p>
+              <p className="text-yellow-400">{user?.coins} 🪙</p>
             </div>
             <div className="w-32 h-2 mt-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 animate-pulse-slow" />
           </div>
         </div>
         <div className="submit flex items-center gap-4 bg-gray-700/50 px-6 py-2 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30">
-          <button
-            onClick={handleSubmit}
-            disabled={isSubmitting}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
-              isSubmitting
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-l"
-            } text-white font-semibold transition-all duration-300 hover:scale-105`}
-          >
-            {isSubmitting ? (
-              <span className="flex items-center gap-2">
-                <svg
-                  className="animate-spin h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
-                Submitting...
-              </span>
-            ) : (
-              <>
-                <CiPlay1 className="text-xl" />
-                Submit
-              </>
-            )}
+          <button onClick={handleSubmit} disabled={isSubmitting} className={`flex items-center gap-2 px-4 py-2 rounded-lg ${isSubmitting ? "bg-gray-500 cursor-not-allowed" : "bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-l"} text-white font-semibold transition-all duration-300 hover:scale-105`}>
+            {isSubmitting ? <span className="flex items-center gap-2"><svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>Submitting...</span> : <>
+              <CiPlay1 className="text-xl" />Submit</>}
           </button>
           <div className="w-[1px] h-6 bg-gray-500" />
-          <button
-            onClick={handleExit}
-            className={`text-lg transition-all duration-300 ${
-              showExitConfirm ? "text-red-500 hover:text-red-700" : "text-white hover:text-gray-300"
-            }`}
-          >
+          <button onClick={handleExit} className={`text-lg transition-all duration-300 ${showExitConfirm ? "text-red-500 hover:text-red-700" : "text-white hover:text-gray-300"}`}>
             <IoExitOutline />
             {showExitConfirm && <span className="ml-1 text-sm">Confirm?</span>}
           </button>
-          <button
-            onClick={executeCode}
-            disabled={isExecuting}
-            className={`px-4 py-2 rounded-xl text-white font-bold transition-colors ${
-              isExecuting
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-emerald-500 hover:bg-emerald-600"
-            }`}
-          >
+          <button onClick={executeCode} disabled={isExecuting} className={`px-4 py-2 rounded-xl text-white font-bold transition-colors ${isExecuting ? "bg-gray-500 cursor-not-allowed" : "bg-emerald-500 hover:bg-emerald-600"}`}>
             {isExecuting ? "Executing..." : "Run Code"}
           </button>
-          <select
-            value={selectedLanguage}
-            onChange={handleLanguageChange}
-            className="px-4 py-2 bg-gray-700 border border-cyan-500/30 rounded-lg text-white text-sm font-medium hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-200"
-          >
-            {LANGUAGES.map((lang) => (
-              <option key={lang.value} value={lang.value} className="bg-gray-800 text-white">
-                {lang.label}
-              </option>
-            ))}
+          <select value={selectedLanguage} onChange={handleLanguageChange} className="px-4 py-2 bg-gray-700 border border-cyan-500/30 rounded-lg text-white text-sm font-medium hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-200">
+            {LANGUAGES.map((lang) => <option key={lang.value} value={lang.value} className="bg-gray-800 text-white">{lang.label}</option>)}
           </select>
+          <input type="number" value={stake} onChange={(e) => setStake(Math.min(Math.max(0, e.target.value), user?.coins || 0))} placeholder="Stake" className="px-4 py-2 bg-gray-700 border border-cyan-500/30 rounded-lg text-white text-sm font-medium" />
+          <button onClick={joinMatch} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Join Match</button>
+          <div className="text-lg font-bold">Time Left: {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</div>
         </div>
         <div className="opponent flex items-center gap-4 transition-all duration-300 hover:scale-105">
           <div className="flex flex-col">
             <div className="flex items-center gap-2 text-lg font-semibold">
-              <p>{opponent.name}</p>
-              <p className="text-yellow-400">{opponent.coins} 🪙</p>
+              <p>{opponent}</p>
+              <p className="text-yellow-400">???</p>
             </div>
             <div className="w-32 h-2 mt-1 rounded-full bg-gradient-to-r from-red-600 to-pink-600 animate-pulse-slow" />
           </div>
-          <img
-            src={opponent.avatar}
-            alt={opponent.name}
-            className="w-12 h-12 rounded-full border-2 border-cyan-500/30 shadow-md"
-          />
+          <img src={Avatar} alt={opponent} className="w-12 h-12 rounded-full border-2 border-cyan-500/30 shadow-md" />
         </div>
       </header>
 
@@ -315,17 +283,7 @@ const Custom1v1 = () => {
           <h1 className="text-4xl font-extrabold mb-4 bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text text-transparent transition-all duration-300 hover:text-teal-300">
             {data.title}
           </h1>
-          <div
-            className={`inline-block px-3 py-1 rounded-full font-semibold text-white text-center mb-4 transition-all duration-300 ${
-              data.difficulty === "Easy"
-                ? "bg-green-500 hover:bg-green-600"
-                : data.difficulty === "Medium"
-                ? "bg-yellow-600 hover:bg-yellow-700"
-                : data.difficulty === "Hard"
-                ? "bg-red-500 hover:bg-red-600"
-                : "bg-gray-500 hover:bg-gray-600"
-            }`}
-          >
+          <div className={`inline-block px-3 py-1 rounded-full font-semibold text-white text-center mb-4 transition-all duration-300 ${data.difficulty === "Easy" ? "bg-green-500 hover:bg-green-600" : data.difficulty === "Medium" ? "bg-yellow-600 hover:bg-yellow-700" : data.difficulty === "Hard" ? "bg-red-500 hover:bg-red-600" : "bg-gray-500 hover:bg-gray-600"}`}>
             {data.difficulty}
           </div>
           <p className="text-lg text-gray-300 mb-6 leading-relaxed transition-opacity duration-300 hover:opacity-90">
@@ -359,11 +317,7 @@ const Custom1v1 = () => {
               onChange={(value) => setCode(value || "")}
               onMount={handleEditorDidMount}
               theme="vs-dark"
-              options={{
-                minimap: { enabled: false },
-                fontSize: 14,
-                wordWrap: "on",
-              }}
+              options={{ minimap: { enabled: false }, fontSize: 14, wordWrap: "on" }}
             />
           </div>
           <div className="flex-1 bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 shadow-lg shadow-cyan-500/10 transition-all duration-300 hover:shadow-xl">
@@ -372,10 +326,7 @@ const Custom1v1 = () => {
               {output && <div className="text-green-400">{output}</div>}
               {error && <div className="text-red-400">{error}</div>}
               {showTestResults && (
-                <div
-                  className="mt-2 text-sm transition-all duration-500 ease-in-out transform origin-top"
-                  style={{ opacity: showTestResults ? 1 : 0, maxHeight: showTestResults ? "200px" : "0" }}
-                >
+                <div className="mt-2 text-sm transition-all duration-500 ease-in-out transform origin-top" style={{ opacity: showTestResults ? 1 : 0, maxHeight: showTestResults ? "200px" : "0" }}>
                   <h4 className="font-bold text-emerald-400 mb-2">Test Cases</h4>
                   {TEST_CASES.map((test, index) => (
                     <div key={index} className="mb-2">

@@ -82,6 +82,76 @@ const LandingPage = () => {
       return () => vortex.removeEventListener("mousemove", handleMouseMove);
     }
   }, []);
+  const features = [
+    {
+      icon: (
+        <div className="flex items-center gap-3">
+          <img
+            src={python}
+            className="w-24 hover:scale-110 transition-transform"
+            alt="python"
+          />
+          <img
+            src={java}
+            className="w-24 hover:scale-110 transition-transform"
+            alt="java"
+          />
+          <img
+            src={cpp}
+            className="w-24 hover:scale-110 transition-transform"
+            alt="cpp"
+          />
+        </div>
+      ),
+      title: "Language Support",
+      desc: "CodeHeaven supports multiple programming languages. Code your way — anytime, anywhere.",
+      gradient: "from-blue-500/20 to-cyan-500/20",
+    },
+    {
+      icon: (
+        <IoGameControllerOutline className="text-7xl text-teal-400 hover:text-teal-300 animate-float transition-transform hover:rotate-6" />
+      ),
+      title: "Gaming",
+      desc: "Join our gaming community and connect with fellow gamers. Share experiences, strategies, and tips.",
+      gradient: "from-emerald-500/20 to-teal-500/20",
+    },
+    {
+      icon: (
+        <MdOutlineRecordVoiceOver className="text-7xl text-purple-400 hover:text-purple-300 animate-float transition-transform hover:scale-110" />
+      ),
+      title: "Voice Chat",
+      desc: "Real-time conversations for collaboration and community building among devs and gamers.",
+      gradient: "from-purple-500/20 to-pink-500/20",
+    },
+    {
+      icon: (
+        <FaHandsAslInterpreting className="text-7xl text-red-400 hover:text-red-300 animate-float transition-transform hover:rotate-3" />
+      ),
+      title: "DSA",
+      desc: "Practice questions and improve coding skills with DSA challenges tailored to all levels.",
+      gradient: "from-red-500/20 to-orange-500/20",
+    },
+    {
+      icon: (
+        <CiSquareMore className="text-7xl text-indigo-400 hover:text-indigo-300 animate-float transition-transform hover:scale-110" />
+      ),
+      title: "Community",
+      desc: "Collaborate, share ideas, and network with developers and tech enthusiasts worldwide.",
+      gradient: "from-indigo-500/20 to-blue-500/20",
+    },
+    {
+      icon: (
+        <img
+          src={common}
+          className="w-24 animate-float hover:scale-110 transition-transform"
+          alt="common"
+        />
+      ),
+      title: "Common Room",
+      desc: "Real-time room to collaborate, solve Leetcode, and code live with friends and strangers alike.",
+      gradient: "from-cyan-500/20 to-blue-500/20",
+    },
+  ];
 
   useEffect(() => {
     const typeSpeed = isDeleting ? 50 : 100;
@@ -255,85 +325,18 @@ const LandingPage = () => {
 
       {/* Features Section (Adjusted) */}
       <div className="px-6 md:px-12 mt-24 py-20 bg-gradient-to-br from-[#0B1226]/80 via-[#101B36]/80 to-[#0B1226]/80 backdrop-blur-md rounded-xl relative z-10 border border-white/5 shadow-2xl">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
-        <h2 className="text-5xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-fadeIn mb-16 relative z-10">
-          Features
-        </h2>
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+      <h2 className="text-5xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-fadeIn mb-16 relative z-10">
+        Features
+      </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-14 justify-items-center relative z-10">
-          {[
-            {
-              icon: (
-                <div className="flex items-center gap-3 animate-float">
-                  <img
-                    src={python}
-                    className="w-10 hover:scale-110 transition-transform"
-                    alt="python"
-                  />
-                  <img
-                    src={java}
-                    className="w-10 hover:scale-110 transition-transform"
-                    alt="java"
-                  />
-                  <img
-                    src={cpp}
-                    className="w-10 hover:scale-110 transition-transform"
-                    alt="cpp"
-                  />
-                </div>
-              ),
-              title: "Language Support",
-              desc: "CodeHeaven supports multiple programming languages. Code your way — anytime, anywhere.",
-              gradient: "from-blue-500/20 to-cyan-500/20",
-            },
-            {
-              icon: (
-                <IoGameControllerOutline className="text-5xl text-teal-400 hover:text-teal-300 animate-float transition-transform hover:rotate-6" />
-              ),
-              title: "Gaming",
-              desc: "Join our gaming community and connect with fellow gamers. Share experiences, strategies, and tips.",
-              gradient: "from-emerald-500/20 to-teal-500/20",
-            },
-            {
-              icon: (
-                <MdOutlineRecordVoiceOver className="text-5xl text-purple-400 hover:text-purple-300 animate-float transition-transform hover:scale-110" />
-              ),
-              title: "Voice Chat",
-              desc: "Real-time conversations for collaboration and community building among devs and gamers.",
-              gradient: "from-purple-500/20 to-pink-500/20",
-            },
-            {
-              icon: (
-                <FaHandsAslInterpreting className="text-5xl text-red-400 hover:text-red-300 animate-float transition-transform hover:rotate-3" />
-              ),
-              title: "DSA",
-              desc: "Practice questions and improve coding skills with DSA challenges tailored to all levels.",
-              gradient: "from-red-500/20 to-orange-500/20",
-            },
-            {
-              icon: (
-                <CiSquareMore className="text-5xl text-indigo-400 hover:text-indigo-300 animate-float transition-transform hover:scale-110" />
-              ),
-              title: "Community",
-              desc: "Collaborate, share ideas, and network with developers and tech enthusiasts worldwide.",
-              gradient: "from-indigo-500/20 to-blue-500/20",
-            },
-            {
-              icon: (
-                <img
-                  src={common}
-                  className="w-10 animate-float hover:scale-110 transition-transform"
-                  alt="common"
-                />
-              ),
-              title: "Common Room",
-              desc: "Real-time room to collaborate, solve Leetcode, and code live with friends and strangers alike.",
-              gradient: "from-cyan-500/20 to-blue-500/20",
-            },
-          ].map((feature, idx) => (
+      <div className="relative z-10">
+        {features.map((feature, idx) => {
+          const isLeft = idx % 2 === 0;
+          return (
             <div
               key={idx}
-              className="w-96 h-80 bg-[#111827]/70 backdrop-blur-md border border-cyan-500/10 rounded-2xl p-8 flex flex-col items-center text-center shadow-xl shadow-cyan-500/5 hover:shadow-cyan-400/20 transition-all duration-500 animate-fadeInUp relative group"
+              className="flex items-center justify-between mb-12 last:mb-0 h-80 backdrop-blur-md border rounded-2xl p-6 shadow-xl shadow-cyan-500/5 hover:shadow-cyan-400/20 transition-all duration-500 animate-fadeInUp relative group"
               style={{
                 animationDelay: `${idx * 100}ms`,
                 animationFillMode: "both",
@@ -341,20 +344,55 @@ const LandingPage = () => {
             >
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-              ></div>
-              <div className="relative z-10">
-                <div className="mb-6">{feature.icon}</div>
-                <h3 className="text-2xl font-semibold mb-3 text-cyan-300 tracking-tight">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-100 text-lg font-normal leading-relaxed tracking-wide">
-                  {feature.desc}
-                </p>
+              >
+                <div className="meteor-container">
+        <div className="meteor-effect"></div>
+
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+        <div className="meteor-effect"></div>
+      </div>
+              </div>
+              <div className="relative z-10 w-1/2 flex justify-center">
+                {isLeft ? (
+                  feature.icon
+                ) : (
+                  <div className="text-left">
+                    <h3 className="text-2xl font-semibold mb-3 text-cyan-300 tracking-tight">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-100 text-lg font-normal leading-relaxed tracking-wide">
+                      {feature.desc}
+                    </p>
+                  </div>
+                )}
+              </div>
+              <div className="relative z-10 w-1/2 flex justify-center">
+                {!isLeft ? (
+                  feature.icon
+                ) : (
+                  <div className="text-left">
+                    <h3 className="text-2xl font-semibold mb-3 text-cyan-300 tracking-tight">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-100 text-lg font-normal leading-relaxed tracking-wide">
+                      {feature.desc}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
+    </div>
 
       {/* Footer */}
       <footer className="footer flex flex-col items-center justify-center gap-6 mt-24 mb-10 px-4 text-center border-t border-gray-700 pt-10 relative footer-animate">
