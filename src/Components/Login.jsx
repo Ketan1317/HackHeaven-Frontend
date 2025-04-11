@@ -68,7 +68,7 @@ const Login = () => {
       setIsLoading(true);
 
       try {
-        const response = await fetch("https://hackheaven.onrender.com/login", {
+        const response = await fetch("http://localhost:5001/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(loginData),
@@ -81,7 +81,7 @@ const Login = () => {
           localStorage.setItem("token", data.access_token);
           localStorage.setItem("user", data.email); 
           alert("Login successful!");
-          window.location.href = "https://hackheaven.onrender.com/main";
+          window.location.href = "http://localhost:5173/main";
         } else {
           setError(data.msg || "Login failed");
         }
