@@ -12,6 +12,7 @@ import CustomWaiting from "./Pages/CustomWaiting";
 import Custom1v1 from "./Components/Custom1v1.jsx";
 import Home from "./Components/Home.jsx";
 import Room from "./Components/Room.jsx";
+import ComingSoon from "./Components/ComingSoon.jsx";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
         <Route path = "/home" element={<Home/>}/>
         <Route path="/room" element={<Room />} />
         <Route path="/room/:roomId" element={<Room />} />
+        <Route path='/coming' element={<ComingSoon/>}/>
         </Routes>
     </Router>
   );

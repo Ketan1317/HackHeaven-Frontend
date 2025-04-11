@@ -7,8 +7,8 @@ import { FaRust } from "react-icons/fa";
 import { FaGolang } from "react-icons/fa6";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import sc1 from "./../assets/sc1.png";
-import sc2 from "./../assets/sc2.png";
+import s3 from "./../assets/s3.png";
+import s4 from "./../assets/s4.png";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { MdOutlineRecordVoiceOver } from "react-icons/md";
 import logoNew from "./../assets/logoNew.png";
@@ -308,14 +308,14 @@ const LandingPage = () => {
         <div className="absolute w-[30%] h-[30%] rounded-full bg-gradient-to-r from-teal-400 via-indigo-500 to-violet-400 opacity-15 blur-3xl z-0 animate-pulse"></div>
         <div className="relative z-10 transform transition-all duration-500 hover:scale-[1.02] hover:rotate-[1deg] hover:translate-y-1">
           <img
-            src={sc2}
+            src={s4}
             alt="screenshot 1"
             className="w-[65%] max-w-5xl rounded-xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)] border border-indigo-800/50 animate-fadeIn"
           />
         </div>
         <div className="absolute top-12 left-[60%] z-20 transform transition-all duration-500 hover:scale-[1.03] hover:rotate-[2deg] hover:translate-y-2">
           <img
-            src={sc1}
+            src={s3}
             alt="screenshot 2"
             className="w-[55%] max-w-5xl min-w-xl rounded-xl shadow-[0_16px_50px_-12px_rgba(0,0,0,0.5)] border border-indigo-500/50 opacity-95 animate-float"
             style={{ transform: "rotate(-2deg)" }}
@@ -343,7 +343,7 @@ const LandingPage = () => {
               }}
             >
               <div
-                className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} rounded-2xl opacity-0 group-hover:opacity-90 transition-opacity duration-300`}
               >
                 <div className="meteor-container">
         <div className="meteor-effect"></div>
@@ -364,11 +364,11 @@ const LandingPage = () => {
                 {isLeft ? (
                   feature.icon
                 ) : (
-                  <div className="text-left">
-                    <h3 className="text-2xl font-semibold mb-3 text-cyan-300 tracking-tight">
+                  <div className="text-left pl-14">
+                    <h3 className="text-4xl font-semibold mb-3 text-cyan-300 tracking-tight">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-100 text-lg font-normal leading-relaxed tracking-wide">
+                    <p className="text-gray-100 text-2xl font-normal leading-relaxed tracking-wide">
                       {feature.desc}
                     </p>
                   </div>
@@ -379,10 +379,10 @@ const LandingPage = () => {
                   feature.icon
                 ) : (
                   <div className="text-left">
-                    <h3 className="text-2xl font-semibold mb-3 text-cyan-300 tracking-tight">
+                    <h3 className="text-4xl font-semibold mb-3 text-cyan-300 tracking-tight">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-100 text-lg font-normal leading-relaxed tracking-wide">
+                    <p className="text-gray-100 text-2xl font-normal leading-relaxed tracking-wide">
                       {feature.desc}
                     </p>
                   </div>
