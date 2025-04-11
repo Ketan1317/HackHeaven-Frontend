@@ -187,3 +187,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } 
+/* Dynamically apply cursor colors */
+.cursor-username { /* Replace 'username' with sanitized username in renderCursors */
+  background-color: transparent !important;
+  border-left: 2px solid var(--cursor-color); /* Set via inline style */
+  width: 2px !important;
+}

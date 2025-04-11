@@ -6,7 +6,7 @@ import { BackgroundBeams } from "../ui/Beams-background";
 import { TbCopy, TbCopyCheck } from "react-icons/tb";
 import { FaLink } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
-import user2 from "../assets/user2.jpg"
+import user2 from "../assets/user2.jpg";
 
 const Waiting = () => {
   const { roomId } = useParams();
@@ -27,6 +27,12 @@ const Waiting = () => {
     navigator.clipboard.writeText(roomId).then(() => {
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
+    });
+  };
+  const handleCopy = () => {
+    navigator.clipboard.writeText("RoomID123").then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000); // Timeout to reset the state
     });
   };
 
@@ -54,16 +60,16 @@ const Waiting = () => {
   }, [countdown, navigate, opponent, roomId, stakeAmount, difficulty]);
 
   return (
-    <div className="bg-[#0B1226] text-white w-full min-h-screen overflow-x-hidden relative">
-      <header className="flex justify-between items-center px-6 h-28 shadow-md shadow-cyan-500/10 backdrop-blur-sm relative z-10">
+    <div className="bg-[#0B1226] text-white w-full min-h-screen relative">
+      <header className="flex justify-between items-center px-6 h-28 shadow-md shadow-cyan-500/10 backdrop-blur-sm z-10">
         <img
           src={logo}
           onClick={() => navigate("/")}
           alt="HackHeaven"
           className="w-32 hover:scale-105 transition-transform duration-300"
         />
-        <div className="flex items-center gap-5 mr-10 animate-fadeIn">
-          <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-cyan-500/30 shadow-lg transition-all duration-300 hover:shadow-cyan-400/50">
+        <div className="flex items-center gap-5">
+          <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-cyan-500/30 shadow-lg">
             <img
               src={OpponentAvatar}
               alt="User Avatar"
@@ -71,110 +77,105 @@ const Waiting = () => {
             />
           </div>
           <div className="flex flex-col">
-            <h1 className="text-2xl font-bold mb-1 drop-shadow-md transition-all duration-300">
-              {user.name}
-            </h1>
-            <div className="flex items-center gap-2 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 px-4 py-2 rounded-xl text-xl font-bold shadow-inner shadow-black/30 transition-transform duration-300">
+            <h1 className="text-2xl font-bold mb-1">{user.name}</h1>
+            <div className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-xl text-xl font-bold shadow-inner">
               <span className="text-yellow-300">{user.coins}</span>
-              <span >🪙</span>
+              <span>🪙</span>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="relative w-full h-[calc(100vh-7rem)] z-0 flex flex-col items-center justify-between pb-10">
+      <main className="relative w-full h-[calc(100vh-7rem)] z-0 grid grid-cols-2 items-center px-10 gap-5">
         <BackgroundBeams className="absolute inset-0" />
-        <div className="flex w-full  max-w-7xl  items-center justify-center gap-7 px-4 animate-slideInTop mt-20">
-          {/* User Section (Left) */}
-          <div className="min-w-[40vw] max-w-[40vw] px-6 py-4 bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl shadow-lg shadow-cyan-500/10 flex gap-7  items-center text-center">
-            <div>
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 text-transparent bg-clip-text mb-2">
-                {user.name}
-              </h2>
-              <p className="text-gray-400 italic text-md mb-4">
-                "Mastering code, one challenge at a time!"
-              </p>
-            </div>
-            <img
-              src={user.avatar}
-              alt="User Avatar"
-              className="w-32 ml-10 h-32 rounded-full border-4 border-cyan-500/30 shadow-md mb-4"
-            />
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <div className="h-8 w-px bg-gray-500"></div> {/* Top line */}
-            <span className="text-gray-400 font-bold text-lg">VS</span>{" "}
-            {/* VS text */}
-            <div className="h-8 w-px bg-gray-500"></div> 
-          </div>
 
-          {/* Opponent Section (Right) */}
-          <div className="min-w-[40vw] max-w-[40vw] px-6 py-4 bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl shadow-lg shadow-cyan-500/10 flex gap-7 items-center text-center">
-            {opponent ? (
-              <>
-                <div>
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 text-transparent bg-clip-text mb-2">
-                    {opponent.name}
-                  </h2>
-                  <p className="text-gray-400 italic text-md mb-4">
-                    "Bringing the heat to the challenge!"
-                  </p>
-                </div>
-                <img
-                  src={opponent.avatar}
-                  alt="Opponent Avatar"
-                  className="w-32 ml-10 h-32 rounded-full border-4 border-cyan-500/30 shadow-md mb-4"
-                />
-              </>
-            ) : (
-              <>
-                <div>
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 text-transparent bg-clip-text mb-2">
-                    Waiting for Opponent
-                  </h2>
-                  <p className="text-gray-400 text-md mb-4">
-                    Share the room code to invite someone!
-                  </p>
-                </div>
-              </>
-            )}
+        {/* User and Opponent Sections */}
+        <div className="flex items-center justify-center gap-10 bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl shadow-lg shadow-cyan-500/10 p-6">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 text-transparent bg-clip-text">
+              {user.name}
+            </h2>
+            <p className="text-gray-400 italic text-md">"Code conqueror!"</p>
           </div>
+          <img
+            src={user.avatar}
+            alt="User Avatar"
+            className="w-24 h-24 rounded-full border-4 border-cyan-500/30"
+          />
         </div>
+        <div className="flex items-center justify-center gap-10 bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl shadow-lg shadow-cyan-500/10 p-6">
+          {opponent ? (
+            <>
+              <div className="text-center">
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 text-transparent bg-clip-text">
+                  {opponent.name}
+                </h2>
+                <p className="text-gray-400 italic text-md">
+                  "Bring on the heat!"
+                </p>
+              </div>
+              <img
+                src={opponent.avatar}
+                alt="Opponent Avatar"
+                className="w-24 h-24 rounded-full border-4 border-cyan-500/30"
+              />
+            </>
+          ) : (
+            <div className="text-center">
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 text-transparent bg-clip-text">
+                Waiting for Opponent
+              </h2>
+              <p className="text-gray-400">Share the room code to invite!</p>
+            </div>
+          )}
+        </div>
+        <div className="flex gap-5 justify-center items-center mt-10">
+      <div
+        className="p-3 bg-gray-800 hover:bg-cyan-500 text-white rounded-full shadow-lg hover:shadow-cyan-400/50 transition-transform transform hover:scale-110 cursor-pointer"
+        onClick={handleCopy}
+      >
+        {isCopied ? (
+          <TbCopyCheck size={30} className="animate-bounce" />
+        ) : (
+          <TbCopy size={30} />
+        )}
+      </div>
+
+      <div
+        className="p-3 bg-gray-800 hover:bg-purple-500 text-white rounded-full shadow-lg hover:shadow-purple-400/50 transition-transform transform hover:scale-110 cursor-pointer"
+        onClick={() => console.log("Generate Link")}
+      >
+        <FaLink size={30} />
+      </div>
+
+      <div
+        className="p-3 bg-gray-800 hover:bg-red-500 text-white rounded-full shadow-lg hover:shadow-red-400/50 transition-transform transform hover:scale-110 cursor-pointer"
+        onClick={() => navigate(-1)}
+      >
+        <ImExit size={30} />
+      </div>
+    </div>
 
         {/* Countdown Timer */}
         {opponent && (
-          <div className="mt-10 text-center">
-            <h2 className="text-xl font-bold text-gray-300 mb-2">
-              Game Starts In:
-            </h2>
-            <div className="flex items-center justify-center h-screen">
-            <div className="text-6xl font-extrabold text-white animate-pulse">
-              {countdown}
-            </div>
-          </div>
-          </div>
-        )}
+  <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-center">
+    <h2 className="text-xl font-bold text-gray-300 mb-4">
+      Game Starts In:
+    </h2>
+    <div className="relative flex items-center justify-center">
+      <div className="text-6xl font-extrabold mt-4 ml-9 text-white animate-pulse transition-transform duration-500 ease-in-out">
+        {countdown}
+      </div>
 
-        {/* Footer Controls */}
-        <div className="flex items-center justify-center gap-5 mt-4">
-          <button
-            className={`px-3 py-2 border-2 border-gray-500 bg-gradient-to-r from-neutral-500 to-neutral-600 rounded-md shadow-md transition-all duration-300 hover:scale-105 ${
-              isCopied ? "border-green-500" : ""
-            }`}
-            onClick={handleCopyCode}
-          >
-            {isCopied ? <TbCopyCheck size={20} /> : <TbCopy size={20} />}
-          </button>
-          <button className="px-3 py-2 border-2 border-gray-500 bg-gradient-to-r from-neutral-500 to-neutral-600 rounded-md shadow-md transition-all duration-300 hover:scale-105">
-            <FaLink size={20} />
-          </button>
-          <button
-            className="px-3 py-2 border-2 border-gray-500 bg-gradient-to-r from-neutral-500 to-neutral-600 rounded-md shadow-md transition-all duration-300 hover:scale-105"
-            onClick={() => navigate(-1)}
-          >
-            <ImExit size={20} />
-          </button>
-        </div>
+      <div className="absolute flex items-center gap-2 mt-20">
+        <div className="w-4 h-4 bg-cyan-500 rounded-full animate-bounce transition-all duration-300"></div>
+        <div className="w-4 h-4 bg-cyan-400 rounded-full animate-bounce delay-200 transition-all duration-300"></div>
+        <div className="w-4 h-4 bg-cyan-300 rounded-full animate-bounce delay-400 transition-all duration-300"></div>
+      </div>
+    </div>
+  </div>
+)}
+
       </main>
     </div>
   );

@@ -223,10 +223,10 @@ const MainPage = () => {
             </marquee>
           </div>
           <div className="hero-buttons animate-fadeInUp delay-500">
-            <button className="hero-button hero-button-primary">
+            <button onClick={() => navigate("/home")} className="hero-button hero-button-primary">
               Enter Common Room
             </button>
-            <button className="hero-button hero-button-secondary">
+            <button onClick={() => navigate("/customdashboard")} className="hero-button hero-button-secondary">
               1v1 Battle
             </button>
           </div>

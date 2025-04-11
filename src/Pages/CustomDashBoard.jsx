@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 import OpponentAvatar from "../assets/dev.jpg";
 import logoNew from "../assets/logoNew.png";
+import "react-toastify/dist/ReactToastify.css";
+import { BackgroundBeams } from "../ui/Beams-background";
 
 const API_URL = "http://localhost:5001";
 
@@ -16,6 +19,7 @@ function Home() {
   const handleCreateRoom = async (e) => {
     e.preventDefault();
     if (!username) {
+      toast.error("Please enter a username");
       setError("Please enter a username");
       return;
     }
@@ -29,9 +33,12 @@ function Home() {
 
       await axios.post(`${API_URL}/join-room/${room_id}`, { username });
       localStorage.setItem("username", username);
+      toast.success("Room created successfully!");
       navigate(`/room/${room_id}`);
     } catch (err) {
-      setError(err.response?.data?.error || "Failed to create room.");
+      const message = err.response?.data?.error || "Failed to create room.";
+      toast.error(message);
+      setError(message);
     } finally {
       setIsLoading(false);
     }
@@ -40,6 +47,7 @@ function Home() {
   const handleJoinRoom = async (e) => {
     e.preventDefault();
     if (!username || !roomCode) {
+      toast.error("Please enter both username and room code");
       setError("Please enter both username and room code");
       return;
     }
@@ -50,9 +58,12 @@ function Home() {
     try {
       await axios.post(`${API_URL}/join-room/${roomCode}`, { username });
       localStorage.setItem("username", username);
+      toast.success("Joined room successfully!");
       navigate(`/room/${roomCode}`);
     } catch (err) {
-      setError(err.response?.data?.error || "Failed to join room.");
+      const message = err.response?.data?.error || "Failed to join room.";
+      toast.error(message);
+      setError(message);
     } finally {
       setIsLoading(false);
     }
@@ -66,6 +77,9 @@ function Home() {
 
   return (
     <div className="bg-[#0B1226] text-white w-full min-h-screen font-sans overflow-x-hidden relative">
+      {/* Toast Notifications */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+
       {/* Background Blobs */}
       <div className="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden">
         <div className="absolute top-20 left-10 w-72 h-72 bg-pink-500 opacity-20 rounded-full blur-3xl animate-blob" />
@@ -102,24 +116,22 @@ function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="flex justify-center mt-24 items-center flex-grow px-4 overflow-hidden">
+      <main className="flex justify-center mt-14 items-center mb-4 flex-grow px-4 overflow-hidden">
+        <BackgroundBeams className="absolute inset-0" />
         <div className="w-full max-w-md bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-8 shadow-lg shadow-cyan-500/10 animate-fade-in">
-          <h1 className="text-[35px] text-center font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-500 mb-6">
-            Common Coding Room
+          <h1 className="text-[35px] text-center font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-500 mb-3">
+            1v1 Battle ⚔️
           </h1>
-          <p className="text-center text-gray-300 text-base mb-8">
-            Collaborate and code together in real-time
+          <p className="text-center text-gray-300 text-base mb-4">
+            Compete and code together in real-time
           </p>
-
-          {error && (
-            <div className="p-4 mb-6 text-red-300 bg-red-900/30 rounded-lg shadow-inner animate-fade-in">
-              {error}
-            </div>
-          )}
 
           <form className="space-y-6">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-cyan-400 mb-1">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-cyan-400 mb-1"
+              >
                 Username
               </label>
               <input
@@ -136,7 +148,10 @@ function Home() {
             </div>
 
             <div>
-              <label htmlFor="roomCode" className="block text-sm font-medium text-cyan-400 mb-1">
+              <label
+                htmlFor="roomCode"
+                className="block text-sm font-medium text-cyan-400 mb-1"
+              >
                 Room Code (for joining)
               </label>
               <input
@@ -155,13 +170,13 @@ function Home() {
               type="button"
               onClick={handleCreateRoom}
               disabled={isLoading}
-              className="w-full px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-2xl 
-                         font-semibold transition-transform duration-300 hover:scale-105 shadow-md 
-                         disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 bg-gradient-to-r from-green-400 to-green-600 text-white rounded-2xl 
+             font-semibold transition-transform duration-300 hover:scale-105 hover:shadow-lg 
+             border-2 border-green-500 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? "Creating Room..." : "Create Room"}
             </button>
-            <div className="flex items-center my-6">
+            <div className="flex items-center">
               <div className="flex-grow h-px bg-white/20"></div>
               <span className="px-3 text-gray-400 text-sm">or</span>
               <div className="flex-grow h-px bg-white/20"></div>
@@ -170,9 +185,9 @@ function Home() {
               type="submit"
               onClick={handleJoinRoom}
               disabled={isLoading}
-              className="w-full px-4 py-2 bg-gradient-to-r from-teal-400 to-cyan-500 text-white rounded-2xl 
-                         font-semibold transition-transform duration-300 hover:scale-105 shadow-md 
-                         disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-2xl 
+             font-semibold transition-transform duration-300 hover:scale-105 hover:shadow-lg 
+             border-2 border-blue-500 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? "Joining Room..." : "Join Existing Room"}
             </button>

@@ -311,7 +311,7 @@ const Room = () => {
               {/* Connection Status */}
               <div
                 className={`inline-flex items-center px-3 py-1.5 ml-14 mt-7 rounded-full text-xs font-semibold shadow-md 
-                    transition-all duration-300 transform hover:scale-105 relative
+                    transition-all duration-300 transform  relative
                     ${
                       isSocketConnected
                         ? "bg-emerald-500/90 hover:bg-emerald-600"
@@ -320,7 +320,7 @@ const Room = () => {
                     animate-pulse`}
               >
                 <span
-                  className="w-2 h-2 rounded-full mr-2 animate-blink"
+                  className="w-2 h-2 rounded-full mr-2 "
                   style={{
                     backgroundColor: isSocketConnected ? "#34D399" : "#EF4444",
                   }}
@@ -407,7 +407,7 @@ const Room = () => {
               : "transform translate-x-0"
           } relative`}
         >
-          <h3 className="font-mono font-bold text-emerald-400 mb-2">Chat</h3>
+          <h3 className="font-mono text-3xl font-bold text-emerald-400 mb-2">Chat</h3>
           <div className="space-y-2">
             {messages.map((msg, index) => (
               <div

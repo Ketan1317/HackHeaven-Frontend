@@ -5,6 +5,7 @@ import OpponentAvatar from "../assets/dev.jpg";
 import logoNew from "../assets/logoNew.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BackgroundBeams } from "../ui/Beams-background";
 
 const API_URL = "http://localhost:5001";
 
@@ -37,6 +38,7 @@ function Home() {
     }
   };
 
+
   const handleJoinRoom = async (e) => {
     e.preventDefault();
     if (!username || !roomCode) {
@@ -65,6 +67,7 @@ function Home() {
 
   return (
      <div className="bg-[#0B1226] text-white w-full min-h-screen   font-sans overflow-x-hidden relative">
+      <BackgroundBeams className="absolute inset-0" />
           <div className="absolute top-0 left-0 w-full h-full  -z-10 overflow-hidden">
             <div className="absolute top-20 left-10 w-72 h-72 bg-pink-500 opacity-20 rounded-full blur-3xl animate-blob" />
             <div className="absolute top-[40%] left-[60%] w-96 h-96 bg-blue-600 opacity-20 rounded-full blur-2xl animate-blob animation-delay-2000" />

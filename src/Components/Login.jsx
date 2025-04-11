@@ -153,7 +153,7 @@ const Login = () => {
 
       <main className="flex justify-center items-center mt-16 px-4">
         <div className="w-full max-w-md bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-8 shadow-lg shadow-cyan-500/10 animate-fadeIn">
-          <h1 className="text-3xl text-center mb-8 font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent animate-float drop-shadow-xl">HackHeaven</h1>
+          <h1 className="text-3xl text-center mb-8 font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent  drop-shadow-xl">HackHeaven</h1>
           
           {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
           

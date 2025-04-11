@@ -17,7 +17,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/landing" element={<LandingPage />} />
         <Route path ="/custom" element = {<Custom1v1/>}/>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -25,7 +25,7 @@ const App = () => {
         <Route path ="/profile" element={<Profile/>}/>
         <Route path ="/customdashBoard" element={<CustomDashboard/>}/>
         <Route path = "/forgotpassword" element={<ForgetPassword/>}/>
-        <Route path="/difficulty" element={<DifficultySelector />} />
+        <Route path="/" element={<DifficultySelector />} />
         <Route path = "/waiting" element={<CustomWaiting/>}/>
         <Route path = "/home" element={<Home/>}/>
         <Route path="/room" element={<Room />} />

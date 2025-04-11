@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoNew from "../assets/logoNew.png";
 import OpponentAvatar from "../assets/dev.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { BackgroundBeams } from "../ui/Beams-background";
 
 const DifficultySelector = ({ initialStake, onConfirm }) => {
   const [difficulty, setDifficulty] = useState("easy");
@@ -25,13 +28,22 @@ const DifficultySelector = ({ initialStake, onConfirm }) => {
     if (onConfirm) {
       onConfirm({ difficulty, stakeAmount });
     }
-    // Add your room creation logic or navigation here
+    toast.success(`Room Created: ${difficulty} - ${stakeAmount} 🪙`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     console.log("Difficulty:", difficulty, "Stake:", stakeAmount);
   };
 
   return (
-    <div className="bg-[#0B1226] text-white w-full min-h-screen   font-sans overflow-x-hidden relative">
-      <div className="absolute top-0 left-0 w-full h-full  -z-10 overflow-hidden">
+    <div className="bg-[#0B1226] text-white w-full min-h-screen font-sans overflow-x-hidden relative">
+      <ToastContainer />
+      <div className="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden">
         <div className="absolute top-20 left-10 w-72 h-72 bg-pink-500 opacity-20 rounded-full blur-3xl animate-blob" />
         <div className="absolute top-[40%] left-[60%] w-96 h-96 bg-blue-600 opacity-20 rounded-full blur-2xl animate-blob animation-delay-2000" />
         <div className="absolute bottom-10 right-10 w-60 h-60 bg-purple-500 opacity-20 rounded-full blur-2xl animate-blob animation-delay-4000" />
@@ -65,11 +77,12 @@ const DifficultySelector = ({ initialStake, onConfirm }) => {
       </header>
 
       <main className="flex justify-center mt-18 items-center flex-grow px-4 overflow-hidden">
+        <BackgroundBeams className="absolute inset-0" />
         <div className="w-full max-w-md bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-8 shadow-lg shadow-cyan-500/10 animate-fadeIn">
-          <h1 className="text-[35px] text-center font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-500 mb-6">
+          <h1 className="text-[35px] text-center font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-500 mb-5">
             Select Difficulty
           </h1>
-          <p className="text-center text-md text-gray-300  mb-6">
+          <p className="text-center text-md text-gray-300 mb-4">
             Choose your difficulty level and stake amount to create a room!
           </p>
           <div className="mb-6">
@@ -92,9 +105,9 @@ const DifficultySelector = ({ initialStake, onConfirm }) => {
                   Hard
                 </option>
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
+              <div className="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none">
                 <svg
-                  className="w-5 h-5 transition-transform duration-300 group-hover:rotate-180"
+                  className="w-6 h-6 transition-transform duration-500 ease-in-out transform group-hover:rotate-180 group-hover:scale-110 text-cyan-400 hover:text-cyan-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -111,7 +124,9 @@ const DifficultySelector = ({ initialStake, onConfirm }) => {
             </div>
           </div>
           <div className="mb-6">
-            <label className="block text-gray-300  text-xl font-semibold mb-2">Stake Amount:</label>
+            <label className="block text-gray-300 text-xl font-semibold mb-2">
+              Stake Amount:
+            </label>
             <input
               type="range"
               min="10"
@@ -127,7 +142,6 @@ const DifficultySelector = ({ initialStake, onConfirm }) => {
               handleConfirmSelection();
               navigate("/waiting");
             }}
-            
             className="w-full text-xl font-semibold rounded-2xl px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white transition-transform duration-300 hover:scale-105"
           >
             Confirm Selection
