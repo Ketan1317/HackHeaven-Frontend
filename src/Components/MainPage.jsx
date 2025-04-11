@@ -2,7 +2,7 @@ import React from "react";
 import logoNew from "./../assets/logoNew.png";
 import { useNavigate, NavLink } from "react-router-dom";
 import { FlipWords } from "../UI/Flip-words";
-import { SparklesCore } from "../ui/sparkles";
+import { SparklesCore } from "./ui/sparkles";
 import { BackgroundBeamsWithCollision } from "../ui/background-beams-with-collisions";
 
 const MainPage = () => {
@@ -123,7 +123,7 @@ const MainPage = () => {
          ${
            isActive
              ? "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400"
-             : "text-white"
+             : "text-white" 
          }
          group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r 
          group-hover:from-cyan-400 group-hover:via-purple-400 group-hover:to-pink-400 
