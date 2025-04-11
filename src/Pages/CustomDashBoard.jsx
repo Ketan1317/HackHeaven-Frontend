@@ -16,58 +16,67 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleCreateRoom = async (e) => {
-    e.preventDefault();
-    if (!username) {
-      toast.error("Please enter a username");
-      setError("Please enter a username");
-      return;
-    }
+  // const handleCreateRoom = async (e) => {
+  //   e.preventDefault();
+  //   if (!username) {
+  //     toast.error("Please enter a username");
+  //     setError("Please enter a username");
+  //     return;
+  //   }
 
-    setIsLoading(true);
-    setError("");
+  //   setIsLoading(true);
+  //   setError("");
 
-    try {
-      const response = await axios.post(`${API_URL}/create-room`);
-      const { room_id } = response.data;
+  //   try {
+  //     const response = await axios.post(`${API_URL}/create-room`);
+  //     const { room_id } = response.data;
 
-      await axios.post(`${API_URL}/join-room/${room_id}`, { username });
-      localStorage.setItem("username", username);
-      toast.success("Room created successfully!");
-      navigate(`/room/${room_id}`);
-    } catch (err) {
-      const message = err.response?.data?.error || "Failed to create room.";
-      toast.error(message);
-      setError(message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     await axios.post(`${API_URL}/join-room/${room_id}`, { username });
+  //     localStorage.setItem("username", username);
+  //     toast.success("Room created successfully!");
+  //     navigate(`/room/${room_id}`);
+  //   } catch (err) {
+  //     const message = err.response?.data?.error || "Failed to create room.";
+  //     toast.error(message);
+  //     setError(message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleJoinRoom = async (e) => {
-    e.preventDefault();
-    if (!username || !roomCode) {
-      toast.error("Please enter both username and room code");
-      setError("Please enter both username and room code");
-      return;
-    }
+    e.preventDefault;
+    navigate("/coming");
+  }
+  const handleCreateRoom =async (e) => {
+    e.preventDefault;
+    navigate("/coming");
+  }
 
-    setIsLoading(true);
-    setError("");
+  // const handleJoinRoom = async (e) => {
+  //   e.preventDefault();
+  //   if (!username || !roomCode) {
+  //     toast.error("Please enter both username and room code");
+  //     setError("Please enter both username and room code");
+  //     return;
+  //   }
 
-    try {
-      await axios.post(`${API_URL}/join-room/${roomCode}`, { username });
-      localStorage.setItem("username", username);
-      toast.success("Joined room successfully!");
-      navigate(`/room/${roomCode}`);
-    } catch (err) {
-      const message = err.response?.data?.error || "Failed to join room.";
-      toast.error(message);
-      setError(message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //   setIsLoading(true);
+  //   setError("");
+
+  //   try {
+  //     await axios.post(`${API_URL}/join-room/${roomCode}`, { username });
+  //     localStorage.setItem("username", username);
+  //     toast.success("Joined room successfully!");
+  //     navigate(`/room/${roomCode}`);
+  //   } catch (err) {
+  //     const message = err.response?.data?.error || "Failed to join room.";
+  //     toast.error(message);
+  //     setError(message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const [user] = useState({
     name: "Ketan_1313",
